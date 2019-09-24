@@ -15,10 +15,7 @@ wget https://nodejs.org/dist/v10.16.3/node-v10.16.3-linux-x64.tar.xz
 tar -xf node-v10.16.3-linux-x64.tar.xz
 mv node-v10.16.3-linux-x64 node
 rm node-v10.16.3-linux-x64.tar.xz
-mkdir -p ~/.local/bin
-ln -s ~/.local/lib/node/bin/node ~/.local/bin/node
-ln -s ~/.local/lib/node/bin/npm ~/.local/bin/npm
-export PATH=$PATH:~/.local/bin/
+export PATH=$PATH:~/.local/lib/node/bin/
 ** add that line to the end of your bashrc to permanently add it to your path **
 
 echo "deb https://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
