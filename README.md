@@ -17,6 +17,7 @@ mv node-v10.16.3-linux-x64 node
 rm node-v10.16.3-linux-x64.tar.xz
 mkdir -p ~/.local/bin
 ln -s ~/.local/lib/node/bin/node ~/.local/bin/node
+ln -s ~/.local/lib/node/bin/npm ~/.local/bin/npm
 export PATH=$PATH:~/.local/bin/
 ** add that line to the end of your bashrc to permanently add it to your path **
 
@@ -31,12 +32,13 @@ npm install
 
 2. have scala.js generate the javascript file, and watch for updates
 ```bash
-cd src
+cd scalajs-react-native-web-starter-2019-09-23/src/scala/
 sbt ~fastOptJS
 ```
 
 3. run
 ```bash
+cd scalajs-react-native-web-starter-2019-09-23/
 npm start
 ** first time through, node will ask to install expo. accept to let it install expo 
 ** a UI should open in your browser
