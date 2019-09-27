@@ -26,7 +26,7 @@ object staticObjs {
 }
 
 class MyButton extends Component[MyButton.Props, MyButton.State] with ReactScalaClass {
-  def render() = {
+  def render() =
     Image(key = 1, sourceDynamic=props.img.src,
       style=literal(
         position="absolute",
@@ -36,7 +36,6 @@ class MyButton extends Component[MyButton.Props, MyButton.State] with ReactScala
         left=props.left
       )
     )
-  }
 }
 
 object MyButton {
