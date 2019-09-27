@@ -4,6 +4,11 @@ src/scala/target
 src/scala/.idea
 src/scala/project/project
 src/scala/project/target
+src/macros/target
+src/macros/.idea
+src/target
+src/project/target
+src/project/project
 
 # dependencies
 /node_modules
