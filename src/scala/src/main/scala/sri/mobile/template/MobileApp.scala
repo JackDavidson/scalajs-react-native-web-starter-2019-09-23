@@ -11,5 +11,6 @@ class MyScalajsTopLevelComponent(os: String, width: Double, height: Double) {
   def render(): ReactNode = View()(
     TodoEntry(TodoEntry.Props(fontSize=30)),
     LowerMenu()(LowerMenuParams(width, height, "regular", 1.0d)),
+    AddNewTodoBtn(AddNewTodoBtn.Props()),
   )
 }
