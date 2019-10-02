@@ -17,14 +17,14 @@ lazy val versions = new {
   val result = (fastOptJS in Compile).value
   val inputFile = result.data
   val outputFile = new File("./assets/generated/scalajs-output.js")
-  IO.write(outputFile, "/* eslint-disable */\n" + IO.read(inputFile))
+  IO.write(outputFile, "/* eslint-disable */\n/* throwIfNamespace */\n" + IO.read(inputFile))
   result
 }
 (fullOptJS in Compile) := {
   val result = (fullOptJS in Compile).value
   val inputFile = result.data
   val outputFile = new File("./assets/generated/scalajs-output.js")
-  IO.write(outputFile, "/* eslint-disable */\n" + IO.read(inputFile))
+  IO.write(outputFile, "/* eslint-disable */\n/* throwIfNamespace */\n" + IO.read(inputFile))
   result
 }
 

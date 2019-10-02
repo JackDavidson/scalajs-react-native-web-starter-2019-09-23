@@ -22,7 +22,6 @@ trait SvgProps extends js.Object {
 }
 
 object Svg {
-
   @inline
   def apply(height: OP[String] = NoValue,
             width: OP[String] = NoValue,
@@ -42,15 +41,5 @@ object Svg {
       ref,
       children.toJSArray)
   }
-
-}
-
-object SvgC {
-
-  @inline
-  def apply(children: ReactNode*) =
-    CreateElementJSNoInline[SvgComponent.type](SvgComponent,
-      json().asInstanceOf[SvgProps],
-      children = children.toJSArray)
 }
 

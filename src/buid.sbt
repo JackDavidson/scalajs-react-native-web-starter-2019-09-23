@@ -3,8 +3,7 @@ organization := "org.scalamacros"
 version := "2.0.0"
 
 scalaVersion in ThisBuild := "2.11.8"
-//run <<= run in Compile in myAwesomeProject
-run := run in Compile in myAwesomeProject
+run := run in Compile in todolist
 
 lazy val mymacros = (project in file("macros")).settings(
  libraryDependencies += "org.scala-lang" % "scala-reflect" % scalaVersion.value,
@@ -15,10 +14,10 @@ lazy val versions = new {
   val sri = "2018.2.2-RC"
 }
 
-lazy val myAwesomeProject = ((project in file("scala")).enablePlugins(ScalaJSPlugin).settings(
+lazy val todolist = ((project in file("scala")).enablePlugins(ScalaJSPlugin).settings(
 scalaJSUseMainModuleInitializer := false,
 scalaJSLinkerConfig ~= (_.withModuleKind(ModuleKind.CommonJSModule)),
-name := "myAwesomeProject",
+name := "todolist",
 scalaVersion := "2.12.4",
 (fastOptJS in Compile) := {
   val result = (fastOptJS in Compile).value

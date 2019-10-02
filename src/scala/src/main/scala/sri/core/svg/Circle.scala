@@ -4,7 +4,6 @@ import sri.core.{JSComponent, _}
 import scalajsplus.macros.{FunctionObjectMacro, exclude}
 import scalajsplus.{OptDefault => NoValue, OptionalParam => OP}
 import sri.universal.MergeJSObjects
-import scala.scalajs.js.Dynamic.{literal => json}
 
 import scala.scalajs.js.JSConverters.genTravConvertible2JSRichGenTrav
 import scala.scalajs.js.|
@@ -28,7 +27,6 @@ trait CircleProps extends js.Object {
 }
 
 object Circle {
-
   @inline
   def apply(cx: OP[Double] = NoValue,
             cy: OP[Double] = NoValue,
@@ -51,14 +49,4 @@ object Circle {
       ref,
       children.toJSArray)
   }
-
-}
-
-object CircleC {
-
-  @inline
-  def apply(children: ReactNode*) =
-    CreateElementJSNoInline[CircleComponent.type](CircleComponent,
-      json().asInstanceOf[CircleProps],
-      children = children.toJSArray)
 }

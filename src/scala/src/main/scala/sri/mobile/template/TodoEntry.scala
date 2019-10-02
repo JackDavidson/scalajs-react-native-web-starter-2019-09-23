@@ -16,11 +16,11 @@ class TodoEntry extends Component[TodoEntry.Props, TodoEntry.State] with ReactSc
         fontSize=props.fontSize,
         fontFamily="Courier New",
       )
-    )("some text!")
+    )(props.text)
 }
 
 object TodoEntry {
-  case class Props(top: Double = 0, left: Double = 0, fontSize: Double = 15)
+  case class Props(top: Double = 0, left: Double = 0, fontSize: Double = 15, text: String = "")
   case class State()
   def apply(props: Props) = CreateElement[TodoEntry](props)
 }

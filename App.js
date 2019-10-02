@@ -63,18 +63,26 @@ export default class NativeApp extends React.Component {
 
     async componentDidMount() {
         const courierNew = require('./assets/fonts/courier_new.ttf');
+        const scPro = require('./assets/fonts/source_code_pro_regular.ttf');
         if (Platform.OS === 'android' || Platform.OS === 'ios') {
             // for android and ios, we need to load font through react-native-font
             await Font.loadAsync({
                 'Courier New': courierNew
             })
+            await Font.loadAsync({
+                'Source Code Pro': scPro
+            })
         }
 	if (Platform.OS === 'web') {
             // for web, we need to supply the font through a font-face
             const iconFontStyles = `@font-face {
-		    src: url(${courierNew}); 
-		    font-family: Courier New;
-	    }`;
+              src: url(${courierNew}); 
+              font-family: Courier New;
+	    }
+	    @font-face {
+              src: url(${scPro}); 
+              font-family: Source Code Pro;
+            }`;
             const style = document.createElement('style');
             style.type = 'text/css';
             if (style.styleSheet) {

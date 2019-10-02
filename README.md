@@ -29,8 +29,8 @@ npm install
 
 2. have scala.js generate the javascript file, and watch for updates
 ```bash
-cd scalajs-react-native-web-starter-2019-09-23/src/scala/
-sbt ~fastOptJS
+cd scalajs-react-native-web-starter-2019-09-23/src/
+sbt "project todolist" ~fastOptJS
 ```
 
 3. run
