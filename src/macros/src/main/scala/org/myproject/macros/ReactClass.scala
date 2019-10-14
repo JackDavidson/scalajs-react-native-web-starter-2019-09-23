@@ -4,9 +4,16 @@ import scala.annotation.{StaticAnnotation, compileTimeOnly}
 import scala.language.experimental.macros
 import scala.reflect.macros.blackbox.Context
 
+@compileTimeOnly("enable macro paradise to expand macro annotations")
+class reactClass extends StaticAnnotation {
+  def macroTransform(annottees: Any*) = macro reactClass.impl
+}
+
 object reactClass {
   def impl(c: Context)(annottees: c.Expr[Any]*): c.Expr[Any] = {
     import c.universe._
+
+    val reactPackage = "react-native-svg"
 
     def modifiedDeclaration(classDecl: ClassDef) = {
       val q"case class $className(..$fields) extends ..$parents { ..$body }" = classDecl
@@ -26,7 +33,7 @@ object ${TermName(baseName)} {
   import scala.scalajs.js.JSConverters.genTravConvertible2JSRichGenTrav
 
   @scala.scalajs.js.native
-  @scala.scalajs.js.annotation.JSImport("react-native-svg", $baseName)
+  @scala.scalajs.js.annotation.JSImport(${reactPackage}, $baseName)
   object ${TermName(baseName + "Component")} extends sri.core.JSComponent[${TypeName(baseName + "Props")}]
 
   trait ${TypeName(baseName + "Props")} extends scala.scalajs.js.Object {
@@ -63,10 +70,7 @@ class ${className} {}
   }
 }
 
-@compileTimeOnly("enable macro paradise to expand macro annotations")
-class reactClass extends StaticAnnotation {
-  def macroTransform(annottees: Any*) = macro reactClass.impl
-}
+
 
 
 
