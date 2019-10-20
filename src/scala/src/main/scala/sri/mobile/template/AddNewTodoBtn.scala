@@ -22,13 +22,11 @@ class AddNewTodoBtn extends Component[AddNewTodoBtn.Props, AddNewTodoBtn.State] 
     val expectedTextHeight = props.scale * normalFontHeight
     val textYPos = (height - expectedTextHeight) / 2 + expectedTextHeight
     val textXPos = (width - expectedTextWidth) / 2
-    View(
-      style=literal(
-        position="absolute",
-        top=props.top,
-        left=props.left,
-      )
-    )(Svg(
+    View(style=literal(
+      position="absolute",
+      top=props.top,
+      left=props.left,
+    ))(Svg(
       height=s"${height}",
       width=s"${width}",
       viewBox=s"0 0 ${width} ${height}")(
@@ -47,7 +45,7 @@ class AddNewTodoBtn extends Component[AddNewTodoBtn.Props, AddNewTodoBtn.State] 
         y=textYPos,
         fontWeight=400d,
         fontFamily="Source Code Pro",
-        )(props.text)
+      )(props.text)
     ))
   }
 }
