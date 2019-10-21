@@ -1,8 +1,9 @@
 package sri.mobile.template
 
+import scalajsplus.{OptDefault, OptionalParam}
 import sri.core.svg.{Circle, Rect, Svg, Text}
 import sri.core.{Component, CreateElement, ReactScalaClass}
-import sri.universal.components.View
+import sri.universal.components.{TouchableOpacity, View}
 
 import scala.scalajs.js
 import scala.scalajs.js.Dynamic.literal
@@ -26,7 +27,7 @@ class AddNewTodoBtn extends Component[AddNewTodoBtn.Props, AddNewTodoBtn.State] 
       position="absolute",
       top=props.top,
       left=props.left,
-    ))(Svg(
+    ))(TouchableOpacity(onPress = props.onPress)(Svg(
       height=s"${height}",
       width=s"${width}",
       viewBox=s"0 0 ${width} ${height}")(
@@ -46,12 +47,16 @@ class AddNewTodoBtn extends Component[AddNewTodoBtn.Props, AddNewTodoBtn.State] 
         fontWeight=400d,
         fontFamily="Source Code Pro",
       )(props.text)
-    ))
+    )))
   }
 }
 
 object AddNewTodoBtn {
-  case class Props(text: String = "Add New", top: Double = 0, left: Double = 0, scale: Double = 1d)
+  case class Props(text: String = "Add New",
+                   top: Double = 0,
+                   left: Double = 0,
+                   scale: Double = 1d,
+                   onPress: OptionalParam[() => _] = OptDefault)
   case class State()
   def apply(props: Props) = CreateElement[AddNewTodoBtn](props)
   def widthWithScale(scale: Double, charCount: Int) = scale * charCount * 18.285714d + (2 * 18.285714d)

@@ -17,7 +17,8 @@ package object svg {
                                 r: Double = null,
                                 stroke: String = null,
                                 strokeWidth: Double = null,
-                                fill: String = null) extends HasChildren
+                                fill: String = null,
+                                onPress: () => _ = null) extends HasChildren
   @reactClass case class Rect(height: Double = null,
                                 width: Double = null,
                                 viewBox: Double = null,
@@ -26,11 +27,13 @@ package object svg {
                                 ry: Double = null,
                                 stroke: String = null,
                                 strokeWidth: Double = null,
-                                fill: String = null) extends HasChildren
+                                fill: String = null,
+                                onPress: () => _ = null) extends HasChildren
   @reactClass case class Text(x: Double = null,
                               y: Double = null,
                               ry: Double = null,
                               fontSize: Double = null,
                               fontWeight: Double = null,
-                              fontFamily: String = null) extends HasChildren
+                              fontFamily: String = null,
+                              onPress: () => _ = null) extends HasChildren
 }
