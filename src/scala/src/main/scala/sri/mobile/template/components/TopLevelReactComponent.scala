@@ -7,29 +7,37 @@ import sri.universal.components.{TextInput, View}
 import scala.scalajs.js.Dynamic.literal
 
 class TopLevelReactComponent extends Component[TopLevelReactComponent.Props, TopLevelReactComponent.State] {
-  initialState(TopLevelReactComponent.State(false))
+  initialState(TopLevelReactComponent.State(todoEntries = Seq()))
   def render() = {
-    val textInput = if (state.addingNewEntry) Seq(
-      TextInput(
-        style = literal(height=40, width=400, top=200, position="absolute", borderColor="gray", borderWidth=1)
-        /*, onChangeText = (t: String) => "asdfdsddf"*/)
-    ) else Seq()
+    val buttonHeight = 50
+    val textInputHeight = 40
     View()(
-      Seq(
-      TodoEntry(TodoEntry.Props(fontSize=30, text="This is a to do entry!")),
-      AddNewTodoBtn(AddNewTodoBtn.Props(
-        top = if (state.addingNewEntry) props.height - 50 else props.height - 150,
+      state.todoEntries.map(entry =>
+        TodoEntry(TodoEntry.Props(fontSize=30, text=entry.data))
+      ) ++
+      Seq(AddNewTodoBtn(AddNewTodoBtn.Props(
+        top = props.height - 50,
         left = props.width / 2 - AddNewTodoBtn.widthWithScale(1, 7) / 2,
         onPress = () => {
           println("clicked v3!");
-          setState((state: TopLevelReactComponent.State) => state.copy(addingNewEntry = true))
+          setState((state: TopLevelReactComponent.State) => state.copy(
+            todoEntries = state.todoEntries :+ TopLevelReactComponent.TodoEntry(data = state.addNewText),
+            addNewText = ""
+          ))
         }
-      ))) ++ textInput: _*)
+      )),
+      TextInput(
+        style = literal(height=40, width=props.width, top=props.height - buttonHeight - textInputHeight - 10, position="absolute", borderColor="gray", borderWidth=1)
+        , onChangeText = (t: String) => setState((state: TopLevelReactComponent.State) => state.copy(
+          addNewText = t
+        )))
+    ): _*)
   }
 }
 
 object TopLevelReactComponent {
-  case class State(addingNewEntry:Boolean)
+  case class TodoEntry(data: String, checked: Boolean = false)
+  case class State(todoEntries: Seq[TodoEntry], addNewText: String = "")
   case class Props(width: Double, height: Double)
   def apply(props: Props) = CreateElement[TopLevelReactComponent](
     props = props,

@@ -10,9 +10,7 @@ class TodoEntry extends Component[TodoEntry.Props, TodoEntry.State] with ReactSc
   def render =
     Text(
       style=literal(
-        position="absolute",
-        top=props.top,
-        left=props.left,
+        position="relative",
         fontSize=props.fontSize,
         fontFamily="Courier New",
       )
