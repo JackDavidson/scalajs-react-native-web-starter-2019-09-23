@@ -2,7 +2,7 @@ package sri.mobile.template.components
 
 import sri.core.{Component, ComponentP, ComponentS, CreateElement, CreateElementNoPropsWithChildren, CreateElementWithChildren}
 import sri.mobile.template.{AddNewTodoBtn, TodoEntry}
-import sri.universal.components.{TextInput, View}
+import sri.universal.components.{ScrollView, TextInput, View}
 
 import scala.scalajs.js.Dynamic.literal
 
@@ -11,10 +11,16 @@ class TopLevelReactComponent extends Component[TopLevelReactComponent.Props, Top
   def render() = {
     val buttonHeight = 50
     val textInputHeight = 40
+    val btnTextInputSpacing = 10
     View()(
+      Seq(ScrollView(style = literal(
+        //backgroundColor="pink",
+        //marginHorizontal=20,
+        height=props.height - buttonHeight - textInputHeight - btnTextInputSpacing
+      ))(
       state.todoEntries.map(entry =>
         TodoEntry(TodoEntry.Props(fontSize=30, text=entry.data))
-      ) ++
+      ): _*)) ++
       Seq(AddNewTodoBtn(AddNewTodoBtn.Props(
         top = props.height - 50,
         left = props.width / 2 - AddNewTodoBtn.widthWithScale(1, 7) / 2,
@@ -27,7 +33,7 @@ class TopLevelReactComponent extends Component[TopLevelReactComponent.Props, Top
         }
       )),
       TextInput(
-        style = literal(height=40, width=props.width, top=props.height - buttonHeight - textInputHeight - 10, position="absolute", borderColor="gray", borderWidth=1)
+        style = literal(height=40, width=props.width, top=props.height - buttonHeight - textInputHeight - btnTextInputSpacing, position="absolute", borderColor="gray", borderWidth=1)
         , onChangeText = (t: String) => setState((state: TopLevelReactComponent.State) => state.copy(
           addNewText = t
         )))
