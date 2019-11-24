@@ -36,4 +36,9 @@ package object svg {
                               fontWeight: Double = null,
                               fontFamily: String = null,
                               onPress: () => _ = null) extends HasChildren
+  @reactClass case class Path(d: String = null,
+                              fill: String = null,
+                              stroke: String = null,
+                              strokeWidth: Double = null,
+                              onPress: () => _ = null) extends HasChildren
 }

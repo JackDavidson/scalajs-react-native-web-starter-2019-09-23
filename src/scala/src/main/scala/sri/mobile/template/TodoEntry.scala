@@ -7,7 +7,11 @@ import scala.scalajs.js
 import js.Dynamic.literal
 
 class TodoEntry extends Component[TodoEntry.Props, TodoEntry.State] with ReactScalaClass {
-  def render =
+  def render = View(style = literal(flexDirection="row"))(
+    CheckBox(CheckBox.Props(
+      scale = 1.0,
+      checked = true
+    )),
     Text(
       style=literal(
         position="relative",
@@ -15,6 +19,7 @@ class TodoEntry extends Component[TodoEntry.Props, TodoEntry.State] with ReactSc
         fontFamily="Courier New",
       )
     )(props.text)
+  )
 }
 
 object TodoEntry {
