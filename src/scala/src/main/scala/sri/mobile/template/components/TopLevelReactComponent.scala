@@ -1,21 +1,43 @@
 package sri.mobile.template.components
 
-import sri.core.{Component, ComponentP, ComponentS, CreateElement, CreateElementNoPropsWithChildren, CreateElementWithChildren}
-import sri.mobile.template.{AddNewTodoBtn, TodoEntry}
+import sri.core.{Component, CreateElement, ReactNode}
+import sri.mobile.template.{AddNewTodoBtn, Input, TodoEntry}
 import sri.universal.components.{ScrollView, TextInput, View}
 
 import scala.scalajs.js.Dynamic.literal
 
-class TopLevelReactComponent extends Component[TopLevelReactComponent.Props, TopLevelReactComponent.State] {
-  initialState(TopLevelReactComponent.State(todoEntries = Seq()))
-  def render() = {
+// the list of flux 'actions'
+class Action()
+case class TextEntryChangeAction(text: String) extends Action
+case class AddTodoEntryAction(text: String) extends Action
+
+// the flux store is a series of case classes. i take a little different approach here from classic flux.
+// Its more like MVC, with one model where flux normally has more than one
+case class Store(todoEntries: Seq[TodoEntryStore], addNewText: String = "")
+case class TodoEntryStore(data: String, checked: Boolean = false)
+
+class TopLevelReactComponent extends Component[TopLevelReactComponent.Props, Store] {
+  initialState(Store(todoEntries = Seq()))
+  def dispatch(event: Action): Unit = {
+    println("dispatched.")
+    setState((state: Store) =>
+      event match {
+        case TextEntryChangeAction(text) => state.copy(
+          addNewText = text
+        )
+        case AddTodoEntryAction(text) => state.copy(
+          todoEntries = state.todoEntries :+ TodoEntryStore(data = text),
+          addNewText = ""
+        )
+      }
+    )
+  }
+  def render(): ReactNode = {
     val buttonHeight = 50
     val textInputHeight = 40
     val btnTextInputSpacing = 10
     View()(
       Seq(ScrollView(style = literal(
-        //backgroundColor="pink",
-        //marginHorizontal=20,
         height=props.height - buttonHeight - textInputHeight - btnTextInputSpacing
       ))(
       state.todoEntries.map(entry =>
@@ -24,26 +46,19 @@ class TopLevelReactComponent extends Component[TopLevelReactComponent.Props, Top
       Seq(AddNewTodoBtn(AddNewTodoBtn.Props(
         top = props.height - 50,
         left = props.width / 2 - AddNewTodoBtn.widthWithScale(1, 7) / 2,
-        onPress = () => {
-          println("clicked v3!");
-          setState((state: TopLevelReactComponent.State) => state.copy(
-            todoEntries = state.todoEntries :+ TopLevelReactComponent.TodoEntry(data = state.addNewText),
-            addNewText = ""
-          ))
-        }
+        onPress = () => dispatch(AddTodoEntryAction(state.addNewText))
       )),
-      TextInput(
-        style = literal(height=40, width=props.width, top=props.height - buttonHeight - textInputHeight - btnTextInputSpacing, position="absolute", borderColor="gray", borderWidth=1)
-        , onChangeText = (t: String) => setState((state: TopLevelReactComponent.State) => state.copy(
-          addNewText = t
-        )))
+      Input(Input.Props(
+        dispatch = dispatch
+        , top=props.height - buttonHeight - textInputHeight - btnTextInputSpacing
+        , width=props.width
+        , text = state.addNewText
+      ))
     ): _*)
   }
 }
 
 object TopLevelReactComponent {
-  case class TodoEntry(data: String, checked: Boolean = false)
-  case class State(todoEntries: Seq[TodoEntry], addNewText: String = "")
   case class Props(width: Double, height: Double)
   def apply(props: Props) = CreateElement[TopLevelReactComponent](
     props = props,
